@@ -15,11 +15,10 @@
 
 // ----------------------------------------MAIN-----------------------------
 int main(){
-  Proceso *memoria;
-  printf("%d\n", getpid());
-  mandarPid(getpid(), memoria);
+  Proceso* memoria;
+  memoria = mandarPid(getpid());
     //PROGRAMA
-  int i = 100000;
+  int i = 10000;
   while (i) {
     printf("Hola %d\n", i);
     usleep(100);
@@ -27,7 +26,6 @@ int main(){
   }
   //una vez que termine de ejecutarse:
   //Desvinculamos memoria y mandamos señal indicando que ya acabo nuestro proceso
-  printf("Mandando la señal al main: %d", memoria->pid_main);
   kill(memoria->pid_main, SIGUSR1);
   desvincular(memoria);
 }

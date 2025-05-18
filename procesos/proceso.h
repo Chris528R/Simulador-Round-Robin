@@ -1,9 +1,9 @@
 #include <sys/types.h>
 // Estructura para compartir PID
 typedef struct{
-  int pid;
-  int pid_main;
+  pid_t pid;
+  pid_t pid_main;
 } Proceso; //memoria compartida
 
-void mandarPid(pid_t pid, Proceso *memoria);
+Proceso* mandarPid(pid_t pid);
 void desvincular(Proceso *memoria);
