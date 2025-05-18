@@ -1,2 +1,22 @@
 # Simulador-Round-Robin
 Simulación en C, en donde se asigna un tiempo Quantum para cada proceso
+## Funcionamiento
+Para el correcto funcionamiento, se tiene lo siguiente, el main, se encarga de manejar los procesos con la cola, tenemos una cola dinamica (listos), para compilar el main:
+* gcc main.c TADColaDin.c procesos/proceso.c -o main
+* Para ejecutar: ./main
+Dentro de la carpeta /procesos/: Se tiene pensado guardar los procesos que se comunicaran con el main, para las pruebas, tengo un archivo llamado pruba.c.
+Este archivo, lo que hace es imprimir hola 1000 (se puede modificar). Lo importante de esta prueba es que quede clao que tiene que tener estos procesos, lo que hago es usar memoria compartida para que cada vez que se habra un archivo, este mande su pid al main y este se encargue de meterlos en una cola.
+Para que sea más sencillo estar trabajando en los diferentes procesos a agregar, me encargue de diseñar un archivo proceso.c y proceso.h, este archivo se encargará de obtener la memoria compartida, así como de mandar el pid del proceso, usando la función void mandarPid(int pid, Proceso * memoria) y la función void desvincular(Proceso * memoria) para liberar la memoria.
+
+Con estas funciones ya se maneja el correcto funcionamiento:
+### NOTA:
+Para evitar errores, recomiendo ejectutar el programa y una vez que el main te indique que ya cuenta con el pid de ese proceso, ejecutar el siguiente.
+El main iniciará a trabajar con los procesos, cuando se le indique (esto se puede cambiar, ya que utilizó hilos para que nada se interrumpa)
+
+Para ejecutar prueba.c, compilar:
+* gcc prueba.c proceso.c -o pru
+* Ejecutar: ./pru
+
+Siempre ejecutar primero el main (crea la memoria compartida) y después los demás procesos.
+
+Falta encontrar una forma en que el main, se entere que los procesos ya han terminado, lo que a mi se me ocurre, pero aún no he probado es mandar una señal como SIGUSR1, para indicar que ha acabado el proceso y de esta forma lo encolamos en la cola de terminados
