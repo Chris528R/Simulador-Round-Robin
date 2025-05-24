@@ -13,7 +13,8 @@ cuando se le asigna memoria a medida que es necesitada,
 durante la ejecución del programa. 
  
 */
-
+#ifndef TADCOLADIN_H
+#define TADCOLADIN_H
 //DEFINICIONES DE CONSTANTES
 #define TRUE	1
 #define FALSE	0
@@ -59,3 +60,5 @@ elemento Element(cola *c, int i); 	// Recibe una cola y un número de elemento d
 int Size(cola *c);					//Tamaño (Size): Retorna el tamaño de la cola 	
 elemento Element(cola * c, int i);	//Recibe una cola y un número de elemento de 1 al tamaño de la cola y retorna el elemento de esa posición
 void Destroy(cola * c);				//Eliminar cola (Destroy): Recibe una cola y la libera completamente.
+						//
+#endif
