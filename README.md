@@ -22,3 +22,8 @@ Para ejecutar prueba.c, compilar:
 
 Siempre ejecutar primero el main (crea la memoria compartida) y después los demás procesos.
 
+***Chavitos, lo siento xd, ya se acabo, no tenia otra cosa que hacer xd
+Para los programas que se crean hijos usando fork, hago uso de un semaforo con nombre para mandar correctamente los pid's 
+Para el problema de los filosofos, como este consiste de un ciclo infinito, lo que hice fue que cuando reciba una señal SIGINT, termine el programa y mande la señal de terminado
+
+Por ahora, parece ser que solo falta el ejercicio de la practica 2, y quizas darle más fomato, no lo se, yo tenia idea de que aprovechando el tiempo. Porque no aprovechar mi código de Edgardo y que se muestren los programas encolados, bien bonito y todo eso, pero eso lo dejo para mañana xd

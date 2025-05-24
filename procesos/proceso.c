@@ -7,7 +7,7 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-Proceso* mandarPid(pid_t pid){
+Proceso* mandarPid(pid_t pid, int flag){ //Bandera para indicar si bloquear el proceso o no
   printf("El pid es : %d\n", pid);
  //VARIABLES PARA PASAR EL PID
   key_t llave;
@@ -26,8 +26,8 @@ Proceso* mandarPid(pid_t pid){
   //printf("El pid del main es : %d\n", memoria->pid_main);
   printf("Mandando a main a nuestro pid %d\n", memoria->pid_main);
   kill( memoria->pid_main , SIGCONT); //Indicamos que ya mandamos nuestro pid
-
-  kill(pid, SIGSTOP); //Bloqueamos este proceso, hasta que nos desbloqueen, para indicar que ya podemos continuar
+  if (flag)
+    kill(pid, SIGSTOP); //Bloqueamos este proceso, hasta que nos desbloqueen, para indicar que ya podemos continuar
   return memoria;
 }
 
