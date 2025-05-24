@@ -5,7 +5,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <pthread.h>
-#include "proceso.h"
+#include "../proceso.h"
 
 #define FILOSOFOS 5
 #define HAMBRIENTO 0

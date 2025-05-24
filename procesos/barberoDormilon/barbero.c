@@ -5,7 +5,7 @@
 #include <semaphore.h>
 #include <time.h>
 #include <unistd.h>
-#include "proceso.h"
+#include "../proceso.h"
 
 #define SILLAS 5
 #define HILOS 10

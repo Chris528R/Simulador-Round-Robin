@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "proceso.h"
+#include "../proceso.h"
 #include <semaphore.h>
 
 #define N_HIJOS 2

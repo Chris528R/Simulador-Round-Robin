@@ -26,6 +26,6 @@ Chavitos, lo siento xd, ya se acabo, no tenia otra cosa que hacer xd
 Para los programas que se crean hijos usando fork, hago uso de un semaforo con nombre para mandar correctamente los pid's 
 Para el problema de los filosofos, como este consiste de un ciclo infinito, lo que hice fue que cuando reciba una señal SIGINT, termine el programa y mande la señal de terminado
 
-Por ahora, parece ser que solo falta el ejercicio de la practica 2, y quizas darle más fomato, no lo se, yo tenia idea de que aprovechando el tiempo. Porque no aprovechar mi código de Edgardo y que se muestren los programas encolados, bien bonito y todo eso, pero eso lo dejo para mañana xd
-
 Además, ya agregue una prueba de como sería usando mi código de Edgardo, sin embargo, no me gusta el resultado
+
+Prepare un archivo sh para compilar los programas :)
