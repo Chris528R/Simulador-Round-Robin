@@ -32,11 +32,11 @@ void onReceive(int s);
 void onSignal( int s);
 void onEnd (int s);
 void continuarProceso (elemento e){
-  printf("Continuando el proceso %d\n", e.pid);
+  printf("\x1b[32mContinuando el proceso %d\x1b[0m\n", e.pid);
   kill(e.pid, SIGCONT);
 }
 void pausarProceso (elemento e){
-  printf("Pausando el proceso %d\n", e.pid);
+  printf("\t\x1b[31mPausando el proceso %d\x1b[0m\n\n", e.pid);
   kill(e.pid, SIGSTOP);
 }
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
   }
   int quantum = atoi(argv[1]), i, error, *t;
 
-  printf("Bienvenido al simulador del algoritmo Round Robin\n");
+  printf("\n\x1b[36m------Bienvenido al simulador del algoritmo Round Robin------\x1b[0m\n");
   printf("Soy el main, con: %d\n", getpid());
 
   //Creamos la memoria compartida
@@ -90,32 +90,30 @@ int main(int argc, char *argv[]){
 // FUNCIONES
 void *funcionSimularTiempos(void* args){
   int n, quantum = *(int *) args;
-  //Esto es solo si queremos que hayamos ingresado todos los procesos a ejecutar y después le indicamos
-  printf("Esperando por la entrada, para iniciar: \n");
-  scanf("%d", &n);
   elemento p;
   int terminado;
 
-  printf("Hay %d elementos en la cola\n", Size(&listos));
   n = Size(&listos);
 
-  while (!Empty(&listos)) {
+  while (1) {
     //Lo sacamos de la cola de listos
-    p = Dequeue(&listos);
-    continuarProceso(p);
-    //Esperamos que se ejecute el tiempo del QUANTUM
-    actualPid = p.pid;
-    terminado = 0;
-    sleep(quantum);
-    //En caso de que alguna señal interrumpa durante la ejecución, este proceso no se volvera a encolar
-    //En caso contrario, lo volvemos a encolar
-    
-    if(procesoTerminado && actualPid == p.pid) {
-      procesoTerminado = 0;
-      printf("\t\tProceso %d terminado\n", p.pid);
-    } else {
-      pausarProceso(p);
-      Queue(&listos, p);
+    if(!Empty(&listos)){
+      p = Dequeue(&listos);
+      continuarProceso(p);
+      //Esperamos que se ejecute el tiempo del QUANTUM
+      actualPid = p.pid;
+      terminado = 0;
+      sleep(quantum);
+      //En caso de que alguna señal interrumpa durante la ejecución, este proceso no se volvera a encolar
+      //En caso contrario, lo volvemos a encolar
+      
+      if(procesoTerminado && actualPid == p.pid) {
+        procesoTerminado = 0;
+        printf("\n\t\t---------Proceso %d terminado----------\n\n", p.pid);
+      } else {
+        pausarProceso(p);
+        Queue(&listos, p);
+      }
     }
   }
   pthread_exit(args);
@@ -126,7 +124,7 @@ void onReceive(int s){
   e.pid = memoria->pid;
   Queue(&listos, e);
   pausarProceso(e);
-  printf("Un nuevo proceso con PID %d a llegado: \n", e.pid);
+  printf("\n\x1b[36mUn nuevo proceso con PID %d ha llegado:\x1b[0m\n\n", e.pid);
 }
 
 void onSignal(int s){
