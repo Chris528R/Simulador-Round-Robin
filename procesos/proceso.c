@@ -1,3 +1,14 @@
+/*
+IMPLEMENTACION DE LA LIBRERIA PARA EL MANEJO DE LOS PROCESOS (proceso.h)
+AUTORES:    Rodriguez Mendoza Christopher
+            Barcenas Pineda Luca Alexander
+            Peredo Borgonio Daniel
+VERSIÓN: 1.0
+
+DESCRIPCIÓN: Código que se encarga de vincular a un proceso externo con la memoria compartida,
+    así como de comunicar al main con los demás procesos
+ 
+*/
 #include "proceso.h"
 #include <signal.h>
 #include <stdlib.h>

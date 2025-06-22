@@ -1,11 +1,14 @@
 /*
- * Idea principal, hacer uso de memoria compartida, para recibir el pid de cada proceso
- * Una vez que tengamos el pid de un nuevo proceso, lo agregamos a la cola.
- * Un hilo se encargara de permitir a cada proceso ejecutarse, dependiendo del quantumdado
-  //Un hilo, se encargara de empezar a ejecutar los programas que esten dentro de la cola
-*
-*/
+IMPLEMENTACION DEL SIMULADOR ROUND ROBIN (main.c)
+AUTORES:    Rodriguez Mendoza Christopher
+            Barcenas Pineda Luca Alexander
+            Peredo Borgonio Daniel
+VERSIÓN: 1.0
 
+DESCRIPCIÓN: Round Robin
+
+COMPILACIÓN PARA GENERAR EL EJECUTABLE: gcc main.c TADColaDin.c procesos/proceso.c -o main
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +27,11 @@ key_t llave;
 int shm;
 Proceso *memoria;
 int actualPid = 0;
+// Variable global usada para indicar si se ha recibido una señal que termina el proceso.
+// Se define como 'volatile sig_atomic_t' para asegurar un acceso seguro desde el manejador de señales.
+// - 'sig_atomic_t' garantiza que las operaciones de lectura y escritura sean atómicas.
+// - 'volatile' evita que el compilador optimice su acceso, ya que puede cambiar fuera del flujo normal.
+// El valor cambia a 1 dentro del manejador de señales cuando se recibe una interrupción (SIGUSR1).
 volatile sig_atomic_t procesoTerminado = 0;
 
 // DEFINICIONES DE FUNCIONES
@@ -133,10 +141,5 @@ void onSignal(int s){
 }
 
 void onEnd(int s){
-  //Significa que un proceso ya termino
-  /*elemento e;
-  e.pid = actualPid;
-  Queue(&terminados, e);
-  printf("Finalizo el proceso %d\n", e.pid);*/
   procesoTerminado = 1;
 }

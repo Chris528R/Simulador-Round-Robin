@@ -1,31 +1,52 @@
-# Simulador-Round-Robin
-Simulación en C, en donde se asigna un tiempo Quantum para cada proceso
-## Funcionamiento
-Para el correcto funcionamiento, se tiene lo siguiente, el main, se encarga de manejar los procesos con la cola, tenemos una cola dinamica (listos), para compilar el main:
-* gcc main.c TADColaDin.c procesos/proceso.c -o main
-* Para ejecutar: ./main 5 
+# Simulador Round Robin
 
-El argumento indica el quantum
+Este proyecto consiste en la simulación del algoritmo de planificación Round Robin utilizando el lenguaje C. Cada proceso recibe una porción de tiempo denominada *quantum*, que define cuánto tiempo puede ejecutarse antes de ceder el control al siguiente proceso en la cola.
 
-Dentro de la carpeta /procesos/: Se tiene pensado guardar los procesos que se comunicaran con el main, para las pruebas, tengo un archivo llamado prueba.c
-Este archivo, lo que hace es imprimir números desde el 10,000 al 1 (se puede modificar). Lo importante de esta prueba es que quede claro que tiene que tener estos procesos, lo que hago es usar memoria compartida para que cada vez que se habra un archivo, este mande su pid al main y este se encargue de meterlos en una cola.
-Para que sea más sencillo estar trabajando en los diferentes procesos a agregar, me encargue de diseñar un archivo proceso.c y proceso.h, este archivo se encargará de obtener la memoria compartida, así como de mandar el pid del proceso, usando la función mandarPid y la función desvincular para liberar la memoria.
+## Estructura del Proyecto
 
-Con estas funciones ya se maneja el correcto funcionamiento:
-### NOTA:
-Para evitar errores, recomiendo ejectutar el programa y una vez que el main te indique que ya cuenta con el pid de ese proceso, ejecutar el siguiente.
-El main iniciará a trabajar con los procesos, cuando se le indique (esto se puede cambiar, ya que utilizó hilos para que nada se interrumpa)
+### Archivos principales
 
-Para ejecutar prueba.c, compilar:
-* gcc prueba.c proceso.c -o pru
-* Ejecutar: ./pru
+- `main.c`: Controla el flujo principal del programa y la gestión de procesos mediante una cola dinámica (`listos`).
+- `TADColaDin.c`: Implementación de la cola dinámica.
+- `proceso.c` / `proceso.h`: Encargados de gestionar la memoria compartida y la comunicación de los procesos con `main`.
 
-Siempre ejecutar primero el main (crea la memoria compartida) y después los demás procesos.
+### Carpeta `/procesos`
 
-Chavitos, lo siento xd, ya se acabo, no tenia otra cosa que hacer xd
-Para los programas que se crean hijos usando fork, hago uso de un semaforo con nombre para mandar correctamente los pid's 
-Para el problema de los filosofos, como este consiste de un ciclo infinito, lo que hice fue que cuando reciba una señal SIGINT, termine el programa y mande la señal de terminado
+Aquí se ubican los procesos individuales que se comunicarán con el `main`. Como ejemplo, se incluye `prueba.c`, un proceso que imprime números del 10,000 al 1. Este archivo es modificable y sirve como plantilla base para agregar nuevos procesos al simulador.
 
-Además, ya agregue una prueba de como sería usando mi código de Edgardo, sin embargo, no me gusta el resultado
+## Compilación y Ejecución
 
-Prepare un archivo sh para compilar los programas :)
+### Compilación del simulador principal
+
+```bash
+gcc main.c TADColaDin.c procesos/proceso.c -o main
+```
+
+### Compilación del simulador principal
+```bash
+./main <quantum>
+```
+   Donde `<quantum>` es el tiempo asignado para cada proceso
+
+### Compilación de procesos de prueba
+``` bash 
+gcc prueba.c proceso.c -o pru
+```
+### Ejecución de un proceso de prueba
+
+```bash 
+./pru
+```
+**Importante:** siempre se debe ejecutar primero el programa `main`, ya que este se encarga de crear la memoria compartida. Después de que `main` indique que ha recibido el PID del proceso, se pueden iniciar los demás procesos.
+
+## Detalles Técnicos
+- Cada proceso que se lanza utiliza memoria compartida para enviar su PID al `main`, que lo encola para su ejecución según el algoritmo Round Robin.
+
+- Se utilizan `semáforos con nombre` para sincronizar el envío de PIDs cuando los procesos se generan mediante `fork()`.
+
+- En casos donde el proceso tiene ejecución indefinida (como en el problema de los filósofos), se utiliza una señal `SIGINT` para finalizarlo adecuadamente y liberar recursos.
+
+- El `main` inicia la ejecución de procesos de forma controlada utilizando `hilos` para evitar bloqueos y permitir una planificación concurrente.
+
+## Recursos Adicionales
+- Se incluye un script `.sh` para facilitar la compilación de los distintos componentes del proyecto.
